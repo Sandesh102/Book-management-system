@@ -79,7 +79,6 @@ def register_page(request):
  
 
 def login_page(request):
-    
      if request.method=="POST":
          username=request.POST.get('username')
          password=request.POST.get('password')
@@ -99,5 +98,6 @@ def login_page(request):
              
      return render(request,'login.html')
 def logout_page(request):
-    logout(request)
+    if request.method == "POST":
+        logout(request)
     return redirect('/login/')
