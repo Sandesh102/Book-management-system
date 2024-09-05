@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+
+{% block start %}
+
+
+<div class="container" mt-5>
+ <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+<h2>Add Books</h2><hr>
+<div class="mb-3">
+<label for="exampleInputEmail1" class="form-label">Book Name</label>
+ <input name="book_name" required type="text" class="form-control">
+
+</div>
+<div class="mb-3">
+ <label for="exampleInputPassword1" class="form-label">Book Description</label>
+<textarea name="book_description" required class="form-control"></textarea>
+</div>
+ <div class="mb-3">
+ <label for="exampleInputEmail1" class="form-label">Book Image</label>
+ <input name="book_image" type="file" class="form-control">
+
+<br>
+ </div>
+<button type="submit" class="btn btn-primary" >Add Now</button>
+
+ </form>
+ <br>
+ <table border="2" class="table table-primary table-striped-columns mt-3">
+    <thead>
+        <tr>
+            <th scope="col">Sn</th>
+            <th scope="col">Book Name</th>
+            <th scope="col">Book Description</th>
+            <th scope="col">Book Image</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ book.book_name }}</td>
+            <td>{{ book.book_description }}</td>
+            <td><img src="/media/{{ book.book_image }}" style="height: 120px"></td>
+         
+            <td> 
+             <a href="/delete_book/{{book.id}}/" class="btn btn-danger mt-2" style="border-radius: 16px; m-2">Delete</a> 
+             <a href="/update_book/{{book.id}}/" class="btn btn-success mt-2" style="border-radius: 16px;">Update</a> 
+             
+           </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+ </table>
+{% endblock %}
