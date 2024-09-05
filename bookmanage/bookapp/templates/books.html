@@ -4,10 +4,10 @@
 {% block start %}
 
 
-<div class="container" mt-5>
+<div class="container mt-5">
  <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-<h2>Add Books</h2><hr>
+<h2>Add Books</h2><hr
 <div class="mb-3">
 <label for="exampleInputEmail1" class="form-label">Book Name</label>
  <input name="book_name" required type="text" class="form-control">
@@ -43,11 +43,15 @@
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ book.book_name }}</td>
             <td>{{ book.book_description }}</td>
-            <td><img src="/media/{{ book.book_image }}" style="height: 120px"></td>
+            <td>{% if book.book_image %}
+                <img src="{{book.book_image.url}}" style="height: 120px">
+                {% else %}
+                <p>No Image Given</p>
+                {% endif %}</td>
          
             <td> 
-             <a href="/delete_book/{{book.id}}/" class="btn btn-danger mt-2" style="border-radius: 16px; m-2">Delete</a> 
-             <a href="/update_book/{{book.id}}/" class="btn btn-success mt-2" style="border-radius: 16px;">Update</a> 
+             <a href="{% url 'delete_book' book.id %}" class="btn btn-danger mt-2" style="border-radius: 16px; m-2">Delete</a> 
+             <a href="{% url 'update_book' book.id %}" class="btn btn-success mt-2" style="border-radius: 16px;">Update</a> 
              
            </td>
         </tr>
